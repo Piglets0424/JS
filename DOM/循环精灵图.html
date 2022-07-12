@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    .box {
+      width: 200px;
+      height: 100px;
+      margin: 100px auto;
+    }
+    li {
+      display: block;
+      float: left;
+      background-color: pink;
+      width: 24px;
+      height: 24px;
+      margin: 10px;
+      /* 精灵图必须是有规律的 */
+      background: url(../images/sprite.png) no-repeat;
+    }
+  </style>
+  <body>
+    <div class="box">
+      <ul>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
+    </div>
+
+    <script>
+      var lis = document.querySelectorAll('li');
+      console.log(lis);
+      for (let i = 0; i < lis.length; i++) {
+        lis[i].style.backgroundPositionY = '-' + i * 44 + 'px';
+      }
+    </script>
+  </body>
+</html>

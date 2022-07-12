@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>换肤</title>
+  </head>
+  <style>
+    body {
+      background: url(../images/10000.jpg) no-repeat center top;
+    }
+    .box {
+      display: flex;
+      width: 720px;
+      height: 81px;
+      margin: 10px auto;
+      background-color: #fff;
+    }
+    .box span {
+      width: 144px;
+      height: 81px;
+      flex: 1;
+      border: 2px solid #fff;
+    }
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+  <body>
+    <div class="box">
+      <span><img src="../images/10000.jpg" alt="" /></span>
+      <span><img src="../images/8466187.jpg" alt="" /></span>
+      <span><img src="../images/8561021.jpg" alt="" /></span>
+      <span><img src="../images/8546859.jpg" alt="" /></span>
+      <span><img src="../images/8554393.jpg" alt="" /></span>
+    </div>
+    <script>
+      // 获取元素
+      var imgs = document.querySelector('.box').querySelectorAll('img');
+      console.log(imgs);
+      // 循环注册事件
+      for (let i = 0; i < imgs.length; i++) {
+        imgs[i].onclick = function () {
+          console.log(this.src);
+          document.body.style.background = 'url(' + this.src + ')';
+        };
+      }
+    </script>
+  </body>
+</html>

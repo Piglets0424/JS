@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    手机号码： <input type="number" /> <button>发送</button>
+    <script>
+      // 获取元素
+      var input = document.querySelector('input');
+      var btn = document.querySelector('button');
+      // 事件注册
+      btn.onclick = function () {
+        if (input.value == '') {
+          alert('请输入手机号码！');
+        } else if (input.value.length !== 11) {
+          alert('请输入正确的手机号码！');
+        } else {
+          //禁用按钮
+          btn.disabled = true;
+          var i = 5;
+          var timer = setInterval(() => {
+            i = i - 1;
+            btn.innerHTML = '还剩' + i + '秒再次发送';
+            console.log(i);
+            if (i = 0) {
+              clearInterval(timer);
+              btn.innerHTML = '发送';
+              btn.disabled = false;
+            }
+          }, 1000);
+        }
+      };
+
+    //   var time = 3; // 定义剩下的秒数
+    //     btn.addEventListener('click', function() {
+    //         btn.disabled = true;
+    //         var timer = setInterval(function() {
+    //             if (time == 0) {
+    //                 // 清除定时器和复原按钮
+    //                 clearInterval(timer);
+    //                 btn.disabled = false;
+    //                 btn.innerHTML = '发送';
+    //             } else {
+    //                 btn.innerHTML = '还剩下' + time + '秒';
+    //                 time--;
+    //             }
+    //         }, 1000);
+        // })
+    </script>
+  </body>
+</html>
