@@ -65,3 +65,19 @@ location.replace()   替换当前页面，因为不记录历史，所以不能�
 location.reload()   重新加载页面，相当于刷新按钮或者 f5 如果参数为true强制刷新ctrl+f5
 
 navigator对象
+navigator对象包含有关浏览器的信息，它有很多属性，我们最常用的是userAgent，该属性可以返回由客户机发送服务器的user-agent头部的值。
+下面前端代码可以判断用户那个终端打开页面，实现跳转
+
+if((navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|
+Mobile| BlackBerry| IEMobile| MOOBrowser|JUC| Fennecw|OSBrowser|BrowserNG| Webos|
+symbian|Windows Phone)/i))) {
+    window.location.href="" //手机 
+} else {
+    wihdow.location.href=""; //电脑 
+}
+
+history对象
+window对象给我们提供了一个history对象，与浏览器历史记录进行交互。该对象包含用户(在浏览器窗口中)访问过的URL。
+back() 可以后退功能 
+forward() 前进功能 
+go(参数) 前进后退功能参数如果是1前进1个页面如果是-1后退1个页面

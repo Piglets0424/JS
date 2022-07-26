@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="./animation.js"></script>
+    <style>
+      a {
+        text-decoration: none;
+      }
+      .focus {
+        position: relative;
+        width: 768px;
+        height: 432px;
+        overflow: hidden;
+        /* border: 1px solid #ccc; */
+        margin: 50px auto;
+      }
+      .focus ul {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 600%;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .focus ul li {
+        float: left;
+        width: 768px;
+        height: 432px;
+      }
+      .focus ul img {
+        width: 100%;
+        height: 100%;
+      }
+      .arrow-l,
+      .arrow-r {
+        display: none;
+        position: absolute;
+        top: 50%;
+        margin-top: -20px;
+        width: 24px;
+        height: 40px;
+        background: rgba(0, 0, 0, 0.3);
+        text-align: center;
+        line-height: 40px;
+        color: #fff;
+        font-size: 18px;
+        z-index: 2;
+      }
+      .arrow-r {
+        right: 0;
+      }
+      .circle {
+        position: absolute;
+        bottom: 10px;
+        left: 50px;
+      }
+      .circle li {
+        list-style: none;
+        float: left;
+        width: 8px;
+        height: 8px;
+        border: 2px solid rgba(255, 255, 255, 0.5);
+        margin: 0 3px;
+        border-radius: 50%;
+        cursor: pointer;
+        caret-color: rgba(0, 0, 0, 0);
+      }
+      .current {
+        background-color: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="focus">
+      <!-- 左侧按钮 -->
+      <a href="javascript:;" class="arrow-l"><</a>
+      <!-- 右侧按钮 -->
+      <a href="javascript:;" class="arrow-r">></a>
+      <!-- 核心的滚动区域 -->
+      <ul>
+        <li>
+          <a href="#"><img src="../images/10000.jpg" alt="" /></a>
+        </li>
+        <li>
+          <a href="#"><img src="../images/8561021.jpg" alt="" /></a>
+        </li>
+        <li>
+          <a href="#"><img src="../images/8466187.jpg" alt="" /></a>
+        </li>
+        <li>
+          <a href="#"><img src="../images/8554393.jpg" alt="" /></a>
+        </li>
+      </ul>
+      <!-- 小圆圈 -->
+      <ol class="circle"></ol>
+    </div>
+
+    <script>
+      // 获取元素
+      var focus = document.querySelector('.focus');
+      var arrowL = document.querySelector('.arrow-l');
+      var arrowR = document.querySelector('.arrow-r');
+
+      // 根据图片数量动态生成小圆圈
+      var ul = focus.querySelector('ul');
+      var circle = document.querySelector('.circle');
+      for (let i = 0; i < ul.children.length; i++) {
+        //创建li
+        var li = document.createElement('li');
+        //绑定自定义属性
+        li.setAttribute('index', i);
+        // 插入li
+        circle.appendChild(li);
+        //绑定点击事件
+        li.addEventListener('click', function () {
+          // 排他思想 先将所有 li 的类设置为空  然后在单独绑定类名
+          for (let i = 0; i < ul.children.length - 1; i++) {
+            circle.children[i].className = '';
+          }
+          this.className = 'current';
+          // 图片移动 注意移动的时 ul 移动距离为小圆圈的索引号乘以图片的宽度   图片的宽度等于盒子的宽度  注意是负值
+          // console.log(this.getAttribute('index'));
+          // console.log(focus.offsetWidth);
+          var target = -this.getAttribute('index') * focus.offsetWidth;
+          // console.log(animate());
+          animate(ul, target);
+
+          // 解决与点击箭头冲突不匹配问题
+          // num = this.getAttribute('index');
+          // circleNum = this.getAttribute('index');
+          num = circleNum = this.getAttribute('index');
+        });
+      }
+      // 将第一个小圆圈设置为实心
+      circle.children[0].className = 'current';
+
+      // 注册事件
+      // 鼠标经过事件
+      focus.addEventListener('mouseenter', function () {
+        // 小箭头显示
+        arrowL.style.display = 'block';
+        arrowR.style.display = 'block';
+        // 停止定时器
+        clearInterval(timer);
+        timer = null; //清除定时器变量
+      });
+      // 鼠标离开事件
+      focus.addEventListener('mouseleave', function () {
+        // 小箭头隐藏
+        arrowL.style.display = 'none';
+        arrowR.style.display = 'none';
+        // 开启定时器
+        timer = setInterval(function () {
+          // 手动调用点击事件
+          arrowR.click();
+        }, 2000);
+      });
+
+      // var num = 0;
+      // // 点击右箭头
+      // arrowR.addEventListener('click', function () {
+      //   num++;
+      //   var target = -num * focus.offsetWidth;
+      //   if (num > ul.children.length - 1) {
+      //     target = 0;
+      //     num = 0;
+      //   }
+      //   animate(ul, target);
+      //   for (let i = 0; i < ul.children.length-1; i++) {
+      //     circle.children[i].className = '';
+      //   }
+      //   circle.children[num].className = 'current';
+      // });
+      // // 点击左箭头
+      // arrowL.addEventListener('click', function () {
+      //   num--;
+      //   if (num < 0) {
+      //     num = 3;
+      //   }
+      //   var target = -num * focus.offsetWidth;
+      //   animate(ul, target);
+      //   for (let i = 0; i < ul.children.length-1; i++) {
+      //     circle.children[i].className = '';
+      //   }
+      //   circle.children[num].className = 'current';
+      // });
+
+      //克隆第一张图片
+      var firstClone = ul.children[0].cloneNode(true);
+      ul.appendChild(firstClone);
+
+      // 小圆圈序号
+      var circleNum = 0;
+      // 图片序号
+      var num = 0;
+
+      // 节流阀
+      var flag = true;
+      // 点击右箭头
+      arrowR.addEventListener('click', function () {
+        if (flag) {
+          flag = false; // 关闭节流阀
+          // 图片动画
+          if (num == ul.children.length - 1) {
+            ul.style.left = 0;
+            num = 0;
+          }
+          num++;
+          var target = -num * focus.offsetWidth;
+          animate(ul, target, function () {
+            flag = true; // 打开节流阀
+          });
+          // 小圆圈跟随图片
+          circleNum++;
+          // if (circleNum == circle.children.length) {
+          //   circleNum = 0;
+          // }
+          circleNum = circleNum == circle.children.length ? 0 : circleNum;
+          circleChange();
+        }
+      });
+
+      // 点击左箭头
+      arrowL.addEventListener('click', function () {
+        if (flag) {
+          flag = false;//关闭节流阀
+          // 图片动画
+          if (num == 0) {
+            num = ul.children.length - 1;
+            ul.style.left = -num * focus.offsetWidth + 'px';
+            circleNum = circle.children.length;
+          }
+          num--;
+          var target = -num * focus.offsetWidth;
+          animate(ul, target, function () {
+            flag = true;// 打开节流阀
+          });
+          // 小圆圈跟随图片
+          circleNum--;
+          circleChange();
+        }
+      });
+
+      function circleChange() {
+        for (let i = 0; i < circle.children.length; i++) {
+          circle.children[i].className = '';
+        }
+        circle.children[circleNum].className = 'current';
+      }
+      // 自动播放
+      var timer = setInterval(function () {
+        // 手动调用点击事件
+        arrowR.click();
+      }, 2000);
+    </script>
+  </body>
+</html>

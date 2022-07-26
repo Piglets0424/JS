@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .box {
+        position: relative;
+        width: 400px;
+        height: 400px;
+        margin: 100px 0 0 100px;
+        border: 1px solid #ddd;
+      }
+      .mask {
+        display: none;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 300px;
+        height: 300px;
+        /* background: rgba(255, 255, 0, .2) */
+        background-color: #fede4f;
+        opacity: 0.4;
+        cursor: move;
+      }
+      .enlarge {
+        display: none;
+        position: absolute;
+        left: 420px;
+        top: -50px;
+        width: 500px;
+        height: 500px;
+        border: 1px solid #ddd;
+        overflow: hidden;
+      }
+      .img {
+        position: absolute;
+        left: 0;
+        top: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box">
+      <img src="../images/s3.png" alt="" />
+      <div class="mask"></div>
+      <div class="enlarge">
+        <img class="img" src="../images/big.jpg" alt="" />
+      </div>
+    </div>
+    <script>
+      // 获取元素
+      var box = document.querySelector('.box');
+      var mask = document.querySelector('.mask');
+      var enlarge = document.querySelector('.enlarge');
+      var img = document.querySelector('.img');
+      // 注册事件
+      // 经过时显示遮罩层和放大盒子
+      box.addEventListener('mouseover', function () {
+        mask.style.display = 'block';
+        enlarge.style.display = 'block';
+      });
+      // 隐藏遮罩层和放大盒子
+      box.addEventListener('mouseout', function () {
+        mask.style.display = 'none';
+        enlarge.style.display = 'none';
+      });
+      // 遮罩层跟随鼠标移动
+      box.addEventListener('mousemove', function (e) {
+        // 鼠标在盒子内的坐标
+        var x = e.pageX - this.offsetLeft;
+        var y = e.pageY - this.offsetTop;
+        // 让鼠标在遮罩层中间才跟随鼠标移动
+
+        // 遮罩层移动时放大的图片也跟随移动 放大图片移动距离是遮罩层的3倍且方向相反
+        // if (x < 150) {
+        //   mask.style.left = 0;
+        //   img.style.left = 0;
+        // } else if (x < 250) {
+        //   mask.style.left = x - 150 + 'px';
+        //   img.style.left = '-' + (x - 150) * 3 + 'px';
+        // } else {
+        //   mask.style.bottom = 0;
+        //   img.style.bottom = 0;
+        // }
+        // if (y < 150) {
+        //   mask.style.top = 0;
+        //   img.style.top = 0;
+        // } else if (y < 250) {
+        //   mask.style.top = y - 150 + 'px';
+        //   img.style.top = '-' + (y - 150) * 3 + 'px';
+        // } else {
+        //   mask.style.bottom = 0;
+        //   img.style.bottom = 0;
+        // }
+
+        // mask移动距离
+        var maskMoveX = x - mask.offsetWidth / 2;
+        var maskMoveY = y - mask.offsetHeight / 2;
+        // mask可移动最大距离
+        var maskX =box.offsetWidth - mask.offsetWidth
+        var maskY =box.offsetHeight - mask.offsetHeight
+        // 遮罩层不超过小盒子
+        if (maskMoveX <= 0) {
+          maskMoveX = 0;
+        } else if (maskMoveX >= maskX) {
+          maskMoveX = maskX;
+        }
+        if (maskMoveY <= 0) {
+          maskMoveY = 0;
+        } else if (maskMoveY >= maskY) {
+          maskMoveY = maskY;
+        }
+        mask.style.left = maskMoveX + 'px';
+        mask.style.top = maskMoveY + 'px';
+
+        // 遮罩层移动距离 / 遮罩层移动最大距离 = 大图片移动距离 / 大图移动最大距离
+        // 大图片移动距离 = 遮罩层移动距离 * 大图移动最大距离 / 遮罩层移动最大距离
+        // 大图移动最大距离
+        var imgX = img.offsetWidth - enlarge.offsetWidth
+        var imgY = img.offsetHeight - enlarge.offsetHeight
+        // 大图移动距离
+        var imgMoveX = maskMoveX * imgX / maskX
+        var imgMoveY = maskMoveY * imgY / maskY
+        img.style.left = -imgMoveX   + 'px';
+        img.style.top = -imgMoveY  + 'px';
+      });
+    </script>
+  </body>
+</html>

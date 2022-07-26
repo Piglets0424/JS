@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <script src="../jQuery/jquery.min.js"></script>
     <style>
       * {
         margin: 0;
@@ -71,23 +72,23 @@
 
     <script>
       // 获取元素
-      var lis = document.querySelector('.tab_list').querySelectorAll('li');
-      var items = document.querySelector('.tab_con').querySelectorAll('.item');
+      // var lis = document.querySelector('.tab_list').querySelectorAll('li');
+      // var items = document.querySelector('.tab_con').querySelectorAll('.item');
 
-      // 实现一
-      // for 循环注册事件  排他思想
-      for (let i = 0; i < lis.length; i++) {
-        lis[i].onclick = function () {
-          for (let i = 0; i < items.length; i++) {
-            items[i].style.display = 'none';
-            // items[i].style = 'display : none';
-            lis[i].className = '';
-          }
-          items[i].style.display = 'block';
-          // items[i].style = 'display: block';
-          this.className = 'current';
-        };
-      }
+      // // 实现一
+      // // for 循环注册事件  排他思想
+      // for (let i = 0; i < lis.length; i++) {
+      //   lis[i].onclick = function () {
+      //     for (let i = 0; i < items.length; i++) {
+      //       items[i].style.display = 'none';
+      //       // items[i].style = 'display : none';
+      //       lis[i].className = '';
+      //     }
+      //     items[i].style.display = 'block';
+      //     // items[i].style = 'display: block';
+      //     this.className = 'current';
+      //   };
+      // }
 
       // 实现二
       // for (let i = 0; i < lis.length; i++) {
@@ -103,6 +104,15 @@
       //     items[index].style.display = 'block';
       //   };
       // }
+
+      // jQuery
+        $(function(){
+          $('.tab_list li').click(function(){
+            $(this).addClass('current').siblings().removeClass('current')
+            var index = $(this).index()
+            $('.tab_con div').eq(index).show().siblings().hide()
+          })
+        })
     </script>
   </body>
 </html>

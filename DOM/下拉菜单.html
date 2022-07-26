@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <script src="../jQuery/jquery.min.js"></script>
     <style>
       * {
         margin: 0;
@@ -124,19 +125,52 @@
     </ul>
   </body>
   <script>
-    // 获取元素
-    var lis = document.querySelector('.nav').children;
-    console.log(lis);
+    // // 原生js
+    // // 获取元素
+    // var lis = document.querySelector('.nav').children;
+    // console.log(lis);
 
-    // 循环注册事件
-    for (let i = 0; i < lis.length; i++) {
-      lis[i].onmouseover = function () {
-        console.log(this.children[this.children.length - 1]);
-        this.children[this.children.length - 1].style.display = 'block';
-      };
-      lis[i].onmouseout = function () {
-        this.children[this.children.length - 1].style.display = 'none';
-      }
-    }
+    // // 循环注册事件
+    // for (let i = 0; i < lis.length; i++) {
+    //   lis[i].onmouseover = function () {
+    //     console.log(this.children[this.children.length - 1]);
+    //     this.children[this.children.length - 1].style.display = 'block';
+    //   };
+    //   lis[i].onmouseout = function () {
+    //     this.children[this.children.length - 1].style.display = 'none';
+    //   }
+    // }
+
+    //jQuery
+    $(function () {
+      //   $('.nav>li').mouseover(function () {
+      //     $(this).find('ul').show();
+      //   });
+      //   $('.nav>li').mouseout(function () {
+      //     $(this).find('ul').hide();
+      //   });
+
+      //   $(function () {
+      //     $('.nav>li').mouseover(function () {
+      //       $(this).find('ul').slideDown(200);
+      //     });
+      //     $('.nav>li').mouseout(function () {
+      //       $(this).find('ul').slideUp(200);
+      //     });
+      //   });
+
+      // $('.nav>li').hover(
+      //   function () {
+      //     $(this).find('ul').slideDown(200);
+      //   },
+      //   function () {
+      //     $(this).find('ul').slideUp(200);
+      //   }
+      // );
+
+      $('.nav>li').hover(function () {
+        $(this).find('ul').stop().slideToggle(200);
+      });
+    });
   </script>
 </html>
