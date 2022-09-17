@@ -116,7 +116,7 @@ scrollTop() 获取被卷去的头部      scrollLeft() 获取被卷去的左侧
 带有动画的返回顶部
    核心原理:使用animate动画返回顶部。
    animate动画函数里面有个scrollTop属性，可以设置位置
-   但是是元素做动画，因此$(“bodyhtml”).animate({scrollTop:0})
+   但是是元素做动画，因此$(“body,html”).animate({scrollTop:0})
 
 
 

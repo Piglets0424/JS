@@ -1,0 +1,231 @@
+# jQuery
+
+### 顶级对象 $ 相当于原生js中的window
+
+### jQuery对象与DOM对象转换
+
+DOM对象转换为jQuery对象:
+
+```js
+ var div = document.querySelector('div')
+   $(div)
+```
+
+jQuery对象转换为DOM对象(两种方式)
+
+```js
+   $('div')[index]        index是索引号 
+   $('div').get(index)    index是索引号
+```
+
+### 隐式迭代 
+
+把匹配的所有元素进行循环遍历
+
+### 筛选选择器
+|:first |       $('li:first') |    获取第一个li元素|
+| :-----| :---- | :----- |
+|:last   |      $('li:last')   |   获取最后一个li元素|
+|:eq(index)  |  $("li:eq(2)") |    获取到的1i元素中，选择索引号为2的元素，索引号index从0开始。|
+|:odd   |       $("li:odd") |      获取到的1i元素中，选择索引号为奇数的元素|
+|:even   |      $("li:even") |     获取到的1i元素中，选择索引号为偶数的元素|
+|parent()   |           $("li").parent();       |           查找父级|
+|children(selector)  |  $("ul").children("li")  |           相当于$("ul>li")，最近一级(亲儿子)|
+|find(selector)   |     $("ul").find("li");     |           相当于$("ul li"),后代选择器|
+|siblings(selector)|    $(".first").siblings("li"); |       查找兄弟节点，不包括自己本身|
+|nextAll([expr])|       $(".first").nextall()  |            查找当前元素之后所有的同辈元素|
+|prevtAll([expr]) |     $(".last").prevAll()  |             查找当前元素之前所有的同辈元素|
+|hasClass(class)     |  $('div').hasClass("protected")|     检查当前的元素是否含有某个特定的类，如果有，则返回true|
+|eq(index)     |        $("li").eq(2);|                     相当于$("li:eq(2)"),index从0开始|
+
+`$(this).index()`   得到当前元素索引号
+
+### jQuery可以使用css方法来修改简单元素样式;也可以操作类，修改多个样式。
+
+1.    1.参数只写属性名，则是返回属性值
+
+     `$(this).css("color');`
+
+2.    2.参数是属性名，属性值，逗号分隔，是设置一组样式，属性必须加引号，值如果是数字可以不用跟单位和引号   `$(this).css("color","red'")`
+
+3.    3.参数可以是对象形式，方便设置多组样式。属性名和属性值用冒号隔开，属性可以不用加引号（不加引号复合属性需要驼峰命名）
+
+     `$(this).css("color":"white""font-size":"20px"})`
+
+- .addClass('类名')       添加类
+- .removeClass('类名')    删除类
+- .toggleClass('类名')    切换类
+
+```
+动画或者效果一旦触发就会执行 如果多次触发 就会造成多个动画或者效果排队执行
+stop()   用于停止动画或效果   注意要写到效果或者动画之前 相当于结束上一次动画
+```
+
+### 获取属性
+
+prop('属性')   获取固有属性 
+
+prop('属性','值')    修改属性
+
+attr('属性')   获取自定义属性
+attr('属性','值')    修改属性
+
+### 数据缓存 data()
+
+这个里面的数据是存放在元素的内存里面
+`$("span").data("uname", "andy");`
+`console.log($("span").data("uname"));`
+这个方法获取data-index h5自定义属性 第一个不用写data而且返回的是数字型 
+`console.log($("div"):data("index"));`
+
+普通元素内容html()(相当于原生innerHTML)
+普通元素文本内容text()(相当与原生innerText)
+
+### 遍历
+
+```js
+$("div").each(function (index, domEle){ xxx; })
+```
+
+   1.each)方法遍历匹配的每一个元素。主要用DOM处理。each每一个
+   2.里面的回调函数有2个参数:index是每个元素的索引号:demEle是每个DOM元素对象，不是iauerv对象
+
+```js
+$.each(object,function(index,element){ xxx;})
+```
+
+   1.$.each()方法可用于遍历任何对象。主要用于数据处理，比如数组，对象
+   2.里面的函数有2个参数:index是每个元素的索引号;element遍历内容
+
+### 创建元素
+
+```
+var li = $('<li>新创建的li</li>')
+```
+
+### 添加元素
+
+ 内部添加    	append() 放在内容的最后面
+          			 prepend() 放在内容的最前面
+
+外部添加   	 after()  把内容放在目标元素后面
+         			  before()  把内容放在目标元素前面
+内部添加元素生成后是父子关系     外部添加生成后是兄弟关系
+
+remove()    删除元素本身
+empty()     删除子节点
+html('')    删除子节点
+
+### 尺寸
+
+-    width()/height()  取得匹配元素宽度和高度值只算width/height 
+-    innerWidth()/innerHieght() 取得匹配元素宽度和高度值包含padding 
+-    outerWidth()/outerHeight() 取得匹配元素宽度和高度值包含paddingborder 
+-    outerWidth(true)/outerHeight(true) 取得匹配元素宽度和高度值包含 padding、borde、margin
+-    如果参数为空则返回相应值 返回为数值型  如果添加参数则修改相应值 参数可以不写单位
+
+### 位置
+
+-    offset()设置或获取元素偏移
+-    offset()方法设置或返回被选元素相对于文档的偏移坐标，跟父级没有关系。
+-    该方法有2个属性left、top。 offset().top 用于获取距离文档顶部的距离， offset()left用于获取距离文档左侧的距离
+-    可以设置元素的偏移:offset(ftop:10,left30})
+
+### position()获取元素偏移
+
+position()方法用于返回被选元素相对于带有定位的父级偏移坐标，如果父级都没有定位，则以文档为准。
+这个方法只能获取不能设置
+
+scrollTop() 获取被卷去的头部      scrollLeft() 获取被卷去的左侧
+
+### 带有动画的返回顶部
+
+核心原理:使用animate动画返回顶部。
+animate动画函数里面有个scrollTop属性，可以设置位置
+但是是元素做动画，因此$(“body,html”).animate({scrollTop:0})
+
+### 事件绑定
+
+##### 单个事件
+
+on()方法在匹配元素上绑定一个或多个事件的事件处理函数
+
+语法:  element.on(events，[selector]，fn)
+
+-    1.events:一个或多个用空格分隔的事件类型，如"click"或"keydown"
+-    2.selector:元素的子元素选择器。
+-    3.fn:回调函数即绑定在元素身上的侦听函数。
+
+#####  多个事件
+
+```js
+  $('div').on({
+        mouseover: function () {},
+        mouseout: function () {},
+        click: function () {},
+      });
+```
+
+##### 事件处理程序相同
+
+```js
+      $('div').on('mouseover mouseout', function () {
+        $(this).toggleClass('current');
+      });
+```
+
+  on()方法还可以进行事件委托    给动态生成的元素绑定事件
+
+### 事件解绑
+
+-    off()方法可以移除通过on0方法添加的事件处理程序
+-    $("p").off()    解绑p元素所有事件处理程序
+-    $("p").off("click")   解绑p元素上面的点击事件后面的 foo 是侦听函数名
+-    $("ul").off("click","li");    解绑事件委托
+-    如果只触发一次可以使用one()方法
+
+### 自动触发事件
+
+```js
+ $('p').on('click', function () {
+     alert('hi~');
+   });
+```
+
+`$('p').click();`     //第一种方式
+`$('p').trigger('click');`      //第二种方式
+`$('p').triggerHandler('click')`         //第三种方式   不会触发元素的默认行为
+
+### 事件对象
+
+```
+   function(event){ }
+   event.stopPropagation();   阻止冒泡
+```
+
+### 拷贝对象
+
+   $.extend()
+   `$.extend([deep], target, object1, [objectn])`
+
+-    deep:如果设为true为深拷贝，默认为false浅拷贝
+-    target:要拷贝的目标对象
+-    object1:待合并到第一个对象的对象。 冲突的会覆盖原来的数据
+-    objectN:待合并到第一个对象的对象。
+
+   浅拷贝是把被拷贝的对象复杂数据类型中的地址拷贝给目标对象，修改目标对象会影响被拷贝对象。
+   深拷贝把里面的数据完全复制一份给目标对象 如果里面有不冲突的属性，会合并到一起
+
+### 多库共存
+
+   如果$产生冲突 将$替换为jQuery
+   如果都冲突  让jQuery释放$控制权 自定义使用   var 变量名 = jQuery.noConflict();
+
+### 插件
+
+   jQuery插件库： https://www.jq22.com/ 
+   jQuery之家；http://www.htmleaf.com/jQuery/
+
+   图片懒加载
+   瀑布流
+   全屏滚动
